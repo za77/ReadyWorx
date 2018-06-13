@@ -18,9 +18,6 @@ class LoginController extends Controller
     {
         //$pro = config('global.model');
         $manageProfile = new users;
-      
-        
-        
         $this->manageProfile = $manageProfile;
         
     }
@@ -34,17 +31,27 @@ class LoginController extends Controller
     		$res = $this->manageProfile->login($req);
     		if($res)
     		{
-    			$req->session()->put('authId', $res->id);
-    			$req->session()->put('role', $res->role);
-    			$req->session()->put('lang', $res->lang);
-    			$req->session()->put('authMail', $res->email);
-    			App::setLocale("ar");
+                if($res->status == 1)
+                {
+        			$req->session()->put('authId', $res->id);
+        			$req->session()->put('role', $res->role);
+        			$req->session()->put('lang', $res->lang);
+        			$req->session()->put('authMail', $res->email);
+        			App::setLocale("ar");
+                    $msg = "Login Success";
+                }
+                else
+                {
+                $msg = $res->status?"your Account has been blocked by admin":"your record Waiting For admin approval";
+                  return redirect()->route('login')->with('msg', $msg); 
+                }
 			//return App::getLocale();
-    			return redirect('admin/user');
+    			return redirect('admin/user')->with('msg', $msg);
     		}
     		else
     		{
-    			return redirect()->route('login');
+                $msg = "Incorrect login in";
+    			return redirect()->route('login')->with('msg', $msg);
     		}
     		
     	}

@@ -17,16 +17,17 @@ class UserController extends Controller
      */
 
     protected $manageProfile;
+    protected $manageUser;
 
 
     public function __construct()
     {
         //$pro = config('global.model');
+
+        //$this->middleware("checkType");
         $manageProfile = new users;
-      
-        
-        
         $this->manageProfile = $manageProfile;
+        $this->manageUser = $manageProfile;
         
     }
 
@@ -35,14 +36,39 @@ class UserController extends Controller
         $lng = Session::get('lang');
         App::setLocale($lng);
         
-        $role = DB::table("role")->get();
+        $role = DB::table("role")->where('id','!=',1)->get();
         
+        $where = array();
+        
+        if(isset($request->firstName))
+            $where[] = "manageProfile.firstName = $request->firstName";
+        if(isset($request->lastName))
+            $where[] = "manageProfile.lastName = $request->lastName";
+        if(isset($request->email))
+            $where[] = "manageProfile.email = $request->email";
+        if(isset($request->companyName))
+            $where[] = "manageProfile.companyName = $request->companyName";
+        if(isset($request->status))
+            $where[] = "manageProfile.status = $request->status";
+
+        if(count($where))
+        {
+            $condition = implode("AND ",$where);
+        }
+        else
+        {
+            $condition = 1;
+        }
+
+
+
         $res = $res = $this->manageProfile
         ->join("manageProfile","manageProfile.userId","=","manageUser.id")
+        ->whereRaw($condition)
         ->selectRaw("manageUser.email,manageUser.status,manageUser.role,manageProfile.*")
         ->paginate(15);
 
-        return view('admin.manageUser.manageUser',["res"=>$res,"role"=>$role]);
+        return view('admin.manageUser.manageUser',["res"=>$res,"role"=>$role,"where"=>$condition]);
     }
 
     public function create()
@@ -59,21 +85,41 @@ class UserController extends Controller
     public function store(Request $request)
     {
         #insert
-        $this->manageProfile->email = $request->email;
-        $this->manageProfile->role = $request->radio;  
-        $this->manageProfile->status = 0;
-        $this->manageProfile->save();
-        $id = $this->manageProfile->id;
-        
-        DB::table("manageProfile")
-        ->insert(["userId"=>$id,"firstName"=>$request->firstName,"lastName"=>$request->lastName,"companyName"=>"ok"]);
+        if($request->userId)
+        {
+            $user = users::find($request->userId);
+
+            $user->email = $request->email;
+            $user->role = $request->radio;  
+            $user->status = 1;
+            $user->save();
+            $id = $user->id;
+            
+            DB::table("manageProfile")
+            ->where("userId","=",$id)
+            ->update(["firstName"=>$request->firstName,
+                     "lastName"=>$request->lastName,"companyName"=>$request->companyName]);
+
+        }
+        else
+        {
+            $this->manageProfile->email = $request->email;
+            $this->manageProfile->role = $request->radio;  
+            $this->manageProfile->status = 0;
+            $this->manageProfile->save();
+            $id = $this->manageProfile->id;
+            
+            DB::table("manageProfile")
+            ->insert(["userId"=>$id,"firstName"=>$request->firstName,
+                     "lastName"=>$request->lastName,"companyName"=>$request->companyName]);
+        }
         return redirect('/admin/user');
+        
     }
 
     
     public function show(users $users)
     {
-        #view
         
     }
 
@@ -93,11 +139,29 @@ class UserController extends Controller
     public function update(Request $request, users $users)
     {
         #update
+        if(isset($request->only))
+        {
+            if($request->only)
+            {
+
+            }
+            else
+            {
+               $this->manageProfile->where("id","=",$request->id)->update(["status"=>$request->status]); 
+               return "success";
+            }
+        }
+        else
+        {
+            return "no";
+        }
         
     }
-    public function destroy(users $users)
+    public function destroy(users $users,$id)
     {
         #delete
+        $this->manageProfile->where("id","=",$id)->delete();
+        return "success";
         
     }
 }

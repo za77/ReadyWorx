@@ -61,13 +61,20 @@
                                 <td>{{$user->lastName}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->companyName}}</td>
-                               <td><span class="uk-badge uk-badge-success">status</span></td>
+                               <td>@if($user->status == 0)<span class="uk-badge uk-badge-warning">Waiting</span>@endif
+                                    @if($user->status == 1)<span class="uk-badge uk-badge-success">Active</span>@endif
+                                    @if($user->status == 2)<span class="uk-badge uk-badge-danger">Blocked</span>@endif
+                                </td>
                                 
                                 <td class="uk-text-center">
-                                        <a href='{{ url("/admin/user/$user->id/edit") }}'><i class="md-icon material-icons">&#xE254;</i></a>
-                                        <a href="#"><i class="md-icon material-icons">verified_user</i></a>
-                                        <a href="#"><i class="md-icon material-icons">&#xE14B;</i></a>
-                                        <a href="#"><i class="md-icon md-text-danger material-icons">&#xE872;</i></a>
+                                        <a href='{{ url("/admin/user/$user->userId/edit") }}'>
+                                        <i class="md-icon material-icons uk-text-primary">&#xE254;</i></a>
+                                        
+                                        @if($user->status == 0 || $user->status == 2 )<a onclick="status('user',{{ $user->userId }},1)"><i class="md-icon material-icons uk-text-success">verified_user</i></a>@endif
+                                        @if($user->status == 1 )<a onclick="status('user',{{ $user->userId }},2)"><i class="md-icon material-icons uk-text-warning">&#xE14B;</i></a>@endif
+                                        <a href="#"><i class="material-icons uk-text-info">&#xE5D5;</i></a>
+                                        <a onclick="remove('user',{{ $user->userId }})"><i class="md-icon uk-text-danger material-icons">&#xE872;</i></a>
+
                                         
                                 </td>
                                 
@@ -76,38 +83,14 @@
                             
                             </tbody>
                         </table>
-                        {{ $res->appends([])->links() }}
+                        <div class="uk-grid">
+                        <div class="uk-width-4-10 float-right">{{ $res->appends([])->links() }}</div>
                         
-                        <!-- <tr>
-                        <td>sam</td>
-                                <td>sam</td>
-                                <td>sam</td>
-                                <td>soon</td>
-                                <td>status</td>
-                                <td class="uk-text-center">
-                                        <a href="#"><i class="md-icon material-icons">&#xE254;</i></a>
-                                        <a href="#" ><i class="md-icon material-icons">&#xE88F;</i></a>
-                                    </td>
-                        </tr> -->
+                       
                         </tbody>
                         </table>
                     </div>
-                     <ul class="uk-pagination ts_pager">
-                        
-                        <li class="first"><a href="javascript:void(0)"><i class="uk-icon-angle-double-left"></i></a></li>
-                        <li class="prev"><a href="javascript:void(0)"><i class="uk-icon-angle-left"></i></a></li>
-                        <li><span class="pagedisplay">1 - 10 / 50 </span></li>
-                        <li class="next"><a href="javascript:void(0)"><i class="uk-icon-angle-right"></i></a></li>
-                        <li class="last"><a href="javascript:void(0)"><i class="uk-icon-angle-double-right"></i></a></li>
-                        <!-- <li data-uk-tooltip title="Page Size">
-                            <select class="pagesize ts_selectize">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                            </select>
-                        </li> -->
-                    </ul>
+                    
                 </div>
             </div>
             </div>  
@@ -116,7 +99,7 @@
         </div>
     
        <div class="md-fab-wrapper">
-        <a class="md-fab md-fab-accent md-fab-wave" href="{{url('admin/user')}}"><i class="material-icons">+</i>
+        <a class="md-fab md-fab-accent md-fab-wave" href="{{url('admin/user/create')}}"><i class="material-icons">+</i>
         </a>
     </div>
         </a>

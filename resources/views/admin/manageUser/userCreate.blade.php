@@ -38,6 +38,13 @@
                             </div>
                             
                         </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-form-row">
+                                <label>Mall or Comapany Name</label>
+                                <input type="text" class="md-input" name="companyName" value="" />
+                            </div>
+                            
+                        </div>
                         <div class="uk-width-medium-1-1">
                             <h3 class="heading_a">Role</h3>
                             <div class="uk-grid" data-uk-grid-margin>
@@ -62,6 +69,7 @@
                             
                             
                         </div>
+                        <input type="hidden" name="userId" value="0">                      
                         <div class="uk-width-medium-1-2 uk-float-right">
                             <div class="uk-form-row">
                                 

@@ -67,8 +67,15 @@
                     </a>
                     
                 </li>
+                <li title="Manage Products">
+                    <a href="{{ url('admin/products') }}">
+                        <span class="menu_icon"><i class="material-icons">&#xE5C3;</i></span>
+                        <span class="menu_title">Manage Products</span>
+                    </a>
+                    
+                </li>
                 <li title="Manage Stores">
-                    <a href="{{ url('blogList') }}">
+                    <a href="{{ url('admin/stores') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE8D1;</i></span>
                         <span class="menu_title">Manage Stores</span>
                     </a>

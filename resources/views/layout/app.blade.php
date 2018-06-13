@@ -15,6 +15,8 @@
 
     <!-- additional styles for plugins -->
         <!-- weather icons -->
+        <script src="http://maps.google.com/maps/api/js?key=AIzaSyDUJukb4ORjrFGkR2oMAKi_GLAB98VoxX4&">
+            </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -38,8 +40,8 @@
      <link rel="stylesheet" href="{{ asset('public/assets/css/themes/themes_combined.min.css') }}" media="all">
     
     
-    
-
+  <link rel="Stylesheet" type="text/css" href="{{ asset('public/js/croppie.css')}}" />
+  
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
@@ -88,7 +90,12 @@
         <!-- chartist (charts) -->
         
         <!-- maplace (google maps) -->
-        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <!-- <script src="http://maps.google.com/maps/api/js?key=AIzaSyDUJukb4ORjrFGkR2oMAKi_GLAB98VoxX4"></script> -->
+        
+
+    <!-- AIzaSyDUJukb4ORjrFGkR2oMAKi_GLAB98VoxX4 -->
+
+
         <script src="{{asset('public/bower_components/maplace-js/dist/maplace.min.js')}}"></script>
         <!-- peity (small charts) -->
         <script src="{{asset('public/bower_components/peity/jquery.peity.min.js')}}"></script>
@@ -119,6 +126,8 @@
 
     
     <script src="{{asset('public/assets/js/pages/forms_advanced.min.js')}}"></script>
+    <script src="{{asset('public/js/Common.js')}}"></script>
+    <script src="{{ asset('public/js/croppie.js')}}"></script>
 
     
   

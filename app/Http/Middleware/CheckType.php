@@ -32,10 +32,29 @@ class CheckType
             }
             else
             {
+                return redirect('admin/login')->with('error', 'Please Login to Access application');  
+            }
+        }
+        else if($guard=='customer')
+        {
+            if(Session::has('customerId'))
+            {
+                if(Session::has('lang'))
+                {
+                    $local = Session::get('lang');
+                
+                App::setLocale($local);
+                return $next($request);
+                }
+            }
+            else
+            {
                 return redirect('/login')->with('error', 'Please Login to Access application');  
             }
+
         }
         return $next($request); 
     }
+
 
 }

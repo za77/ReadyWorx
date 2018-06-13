@@ -3,28 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\coupons;
+use App\category;
 use Illuminate\Http\Request;
 
 class CouponsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         //
+        return view('admin.manageCoupons.manageCoupons');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
+        $res = category::where('approved','=',1)->get();
+        return view('admin.manageCoupons.couponsCreate',['res'=>$res]);
     }
 
     /**
@@ -35,15 +30,13 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $coupons = new coupons;
+        $coupons->add($request);
+        return redirect('adin/coupons')->with('msg',"New Coupon added Sucessfully");
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\coupons  $coupons
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(coupons $coupons)
     {
         //

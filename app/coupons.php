@@ -18,8 +18,25 @@ class coupons extends Model
 		$this->startDate=$req->startDate;
 		$this->endDate=$req->endDate;
 		$this->rules=$req->rules;
-		$this->picture=$req->picture;
 		$this->createdBy =$id; 
+
+	if(isset($request->crop))
+        {
+            if($request->crop)
+            {
+                $data =  $request->crop;
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name= time().'.png';
+                $path = public_path() . "/uploads/coupons/" . $image_name;
+                $pic = "public/uploads/coupons/" . $image_name;
+                file_put_contents($path, $data);
+                $tbl->picture = $pic;
+                
+            }
+        }
+
 		$this->save();
 		return "ok";
 

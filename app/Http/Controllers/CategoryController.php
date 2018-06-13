@@ -87,18 +87,31 @@ class CategoryController extends Controller
     public function edit(category $category)
     {
         //
+        $res = category::where("id","=",1)->first();
+
+
+        return view('admin.manageCategory.categoryEdit',["res"=>$res]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\category  $category
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, category $category)
     {
-        //
+        if(isset($request->only))
+        {
+            if($request->only)
+            {
+
+            }
+            else
+            {
+               $this->manageCategory->where("id","=",$request->id)->update(["approved"=>$request->status]); 
+               return "success";
+            }
+        }
+        else
+        {
+            return "no";
+        }
     }
 
     /**

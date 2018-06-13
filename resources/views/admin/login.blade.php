@@ -20,6 +20,13 @@
 
     <!-- altair admin login page -->
     <link rel="stylesheet" href="{{asset('public/assets/css/login_page.min.css')}}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <style type="text/css" media="screen">
@@ -30,9 +37,22 @@
     body{
         padding:200px 24px;!important
     }
+    .alert
+    {
+        top:10%;
+        position:fixed;
+        width:100%;
+        height:100px;
+        text-align: center;
+    }
 </style>
 <body class="login_page">
-
+    
+@if (session('msg'))
+ <div class="alert alert-danger">
+  <strong>Log in Alert</strong>: {{ session('msg')}}.
+</div>
+@endif 
     <div class="login_page_wrapper">
         <div class="md-card" id="login_card">
             <div class="md-card-content large-padding" id="login_form">

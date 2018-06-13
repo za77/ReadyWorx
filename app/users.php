@@ -8,7 +8,7 @@ use Session;
 class users extends Model
 {
     protected $table = "manageUser";
-
+    protected $fillable = ['email','id','gmail','fb','gmail','status','lang'];
     public function firstId($id)
     {
     	$data = $this->where("id","=",$id)->first();
@@ -25,7 +25,7 @@ class users extends Model
     	$this->role = $req->role;
     	$this->email = $req->email;
     	$this->password = Hash::make($req->password);
-    	$this->tempToken = Hash::make($req->password);
+    	//$this->tempToken = Hash::make($req->password);
     	$this->authToken = Hash::make($req->password);
     	$this->save();
     }
@@ -35,10 +35,10 @@ class users extends Model
     	$data = $this->where("email","=",$req->email)->first();
         if($data)
         {
-    	$res = $this->where("email","=",$req->email)
-    	->where("password","=",Hash::check("$req->password",$data->password))->first();
-        
-        
+        	$data = $this->where("email","=",$req->email)
+        	->where("password","=",Hash::check("$req->password",$data->password))
+            ->first();
+            $res = $data?$data:0; 
         }
         else
         {

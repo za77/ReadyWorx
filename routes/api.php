@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::POST('{tbl}/save', 'SamController@save');
+Route::POST('{tbl}/list', 'SamController@list');
+Route::POST('{tbl}/list/{id}', 'SamController@listById');

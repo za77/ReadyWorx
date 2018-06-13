@@ -1,13 +1,30 @@
 @extends('layout.app')
 @section('content')
-    
+    <style type="text/css" media="screen">
+ .fileUpload {
+    position: absolute;
+    overflow: hidden;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+    </style>
+   
          
         <div id="page_content_inner">
 
             <div class="md-card uk-margin-top">
                 <div class="md-card-content">
                     <h3 class="heading_a">Create User</h3>
-                    <form method="POST" action="{{ url('admin/category') }}">
+                    <form method="POST" action="{{ url('admin/category') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="uk-grid" data-uk-grid-margin>
 
@@ -22,6 +39,24 @@
                                         <label>Description</label>
                                         <textarea rows="4"  class="form-control" name="desc" />
                                         </textarea>
+                                    </div>
+                                     <div class="uk-width-medium-1-3 uk-margin-large-top">
+                                         <div class="input-group">
+                                            <input id="uploadFile" class="form-control" placeholder="Choose File" disabled="disabled">
+                                            <div class="input-group-btn">
+                                              <div class="fileUpload btn btn-danger">
+                                                <span><i class="glyphicon glyphicon-upload"></i> Upload</span>
+                                                <input id="uploadBtn" name="pic" type="file" onchange="up()" class="upload" />
+
+                                              </div>
+                                              <br>
+
+                                              
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="uk-width-medium-1-1">
+                                    <span class="uk-text-small">250 * 250</span>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +91,11 @@
     
             
         </div>
-    
+     <script>
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value.substring(12);
+};
+    </script>
 
 @endsection
     <!-- secondary sidebar -->

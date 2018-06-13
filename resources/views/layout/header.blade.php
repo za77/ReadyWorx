@@ -1,14 +1,16 @@
     <header id="header_main">
         <div class="header_main_content">
             <nav class="uk-navbar">
-                                
+                                <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+                </a>
                 <!-- main sidebar switch -->
                 
                 
                 <!-- secondary sidebar switch -->
                
                
-                
+                {{-- 
                     <div id="menu_top_dropdown" class="uk-float-left uk-hidden-small">
                         <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
                             <a href="#" class="top_menu_toggle"><i class="material-icons md-24">&#xE8F0;</i></a>
@@ -44,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                
+                 --}}
                 <div class="uk-navbar-flip">
                         <ul class="uk-navbar-nav user_actions">
                             
@@ -158,7 +160,7 @@
                                 <a href="#" class="user_action_image"><img class="md-user-image" src="{{ url('public/assets/img/avatars/avatar_11_tn.png') }}" alt=""/></a>
                                 <div class="uk-dropdown uk-dropdown-small">
                                     <ul class="uk-nav js-uk-prevent">
-                                        <li><a href="page_user_profile.html">My profile</a></li>
+                                        <li><a href="{{ url('admin/profile') }}">My profile</a></li>
                                         <li><a href="page_settings.html">Settings</a></li>
                                         <li><a href="login.html">Logout</a></li>
                                     </ul>
@@ -188,7 +190,7 @@
             
         </div>
         
-        <div class="menu_section">
+        {{--< --div class="menu_section">
             <ul>
                 <li class="current_section" title="Dashboard">
                     <a href="{{ url('/') }}">
@@ -227,5 +229,5 @@
                 </li>
                
             </ul>
-        </div>
+        </div>--}}
     </aside><!-- main sidebar end -->
